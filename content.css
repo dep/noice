@@ -1,0 +1,330 @@
+/* Noice LLM Assistant - Content Script Styles */
+
+/* Backdrop overlay */
+.noice-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2147483646;
+  opacity: 0;
+  transition: opacity 0.15s ease-out;
+  pointer-events: none;
+}
+
+.noice-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Main modal container */
+.noice-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 90%;
+  max-width: 600px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #e0e0e0;
+  opacity: 0;
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.noice-modal.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+/* Input area */
+.noice-input-container {
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.noice-textarea {
+  width: 100%;
+  min-height: 60px;
+  max-height: 200px;
+  padding: 12px;
+  background: #2d2d2d;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.noice-textarea:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.noice-textarea::placeholder {
+  color: #888;
+}
+
+.noice-hint {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.noice-hint kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #333;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+}
+
+/* Results area */
+.noice-results {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.noice-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.noice-results::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.noice-results::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.noice-results::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* Message bubbles */
+.noice-message {
+  padding: 12px 16px;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.noice-message:last-child {
+  border-bottom: none;
+}
+
+.noice-message-user {
+  background: #2d2d2d;
+}
+
+.noice-message-assistant {
+  background: #1e1e1e;
+}
+
+.noice-message-role {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.noice-message-user .noice-message-role {
+  color: #6366f1;
+}
+
+.noice-message-assistant .noice-message-role {
+  color: #10b981;
+}
+
+.noice-message-content {
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* Loading indicator */
+.noice-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  color: #888;
+}
+
+.noice-loading-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.noice-loading-dot {
+  width: 6px;
+  height: 6px;
+  background: #6366f1;
+  border-radius: 50%;
+  animation: noice-pulse 1.4s infinite ease-in-out both;
+}
+
+.noice-loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.noice-loading-dot:nth-child(2) { animation-delay: -0.16s; }
+.noice-loading-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes noice-pulse {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Error message */
+.noice-error {
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+  color: #fca5a5;
+  margin: 8px;
+  border-radius: 4px;
+}
+
+/* Markdown content styles */
+.noice-message-content h1,
+.noice-message-content h2,
+.noice-message-content h3,
+.noice-message-content h4,
+.noice-message-content h5,
+.noice-message-content h6 {
+  margin: 1em 0 0.5em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.noice-message-content h1:first-child,
+.noice-message-content h2:first-child,
+.noice-message-content h3:first-child,
+.noice-message-content h4:first-child,
+.noice-message-content h5:first-child,
+.noice-message-content h6:first-child {
+  margin-top: 0;
+}
+
+.noice-message-content h1 { font-size: 1.5em; }
+.noice-message-content h2 { font-size: 1.3em; }
+.noice-message-content h3 { font-size: 1.1em; }
+
+.noice-message-content p {
+  margin: 0 0 0.75em;
+}
+
+.noice-message-content p:last-child {
+  margin-bottom: 0;
+}
+
+.noice-message-content ul,
+.noice-message-content ol {
+  margin: 0 0 0.75em;
+  padding-left: 20px;
+}
+
+.noice-message-content ul:last-child,
+.noice-message-content ol:last-child {
+  margin-bottom: 0;
+}
+
+.noice-message-content li {
+  margin: 0.25em 0;
+}
+
+.noice-message-content code {
+  background: #2d2d2d;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+  font-size: 0.9em;
+}
+
+.noice-message-content pre {
+  background: #2d2d2d;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 0 0 0.75em;
+}
+
+.noice-message-content pre:last-child {
+  margin-bottom: 0;
+}
+
+.noice-message-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.noice-message-content blockquote {
+  margin: 0 0 0.75em;
+  padding: 8px 16px;
+  border-left: 3px solid #444;
+  color: #aaa;
+}
+
+.noice-message-content blockquote:last-child {
+  margin-bottom: 0;
+}
+
+.noice-message-content a {
+  color: #6366f1;
+  text-decoration: none;
+}
+
+.noice-message-content a:hover {
+  text-decoration: underline;
+}
+
+.noice-message-content hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 16px 0;
+}
+
+.noice-message-content strong {
+  font-weight: 600;
+}
+
+.noice-message-content em {
+  font-style: italic;
+}
+
+.noice-message-content del {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Page context indicator */
+.noice-context-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(99, 102, 241, 0.2);
+  border-radius: 4px;
+  font-size: 11px;
+  color: #a5b4fc;
+  margin-bottom: 8px;
+}
